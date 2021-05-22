@@ -1,3 +1,9 @@
+//
+//  Logger.cpp
+//
+//  Copyright © 2021 Ahiruchan Koubou. All rights reserved.
+//
+
 #include <cstdio>
 #include <cstdarg>
 #include <cstring>

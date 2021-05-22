@@ -3,6 +3,7 @@
 //
 //  Copyright © 2021 Ahiruchan Koubou. All rights reserved.
 //
+
 #ifndef BlindRunner_hpp
 #define BlindRunner_hpp
 #include "ahiru_common.hpp"
