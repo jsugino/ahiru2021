@@ -127,6 +127,23 @@ int32_t Observer::getLocY() {
 
 void Observer::operate() {
     colorSensor->getRawColor(cur_rgb);
+	g_grayScale = (cur_rgb.r * 77 + cur_rgb.g * 150 + cur_rgb.b * 29) / 256;
+
+
+    bool result = check_touch();
+    if (result && !touch_flag) {
+        syslog(LOG_NOTICE, "%08u, TouchSensor flipped on", clock->now());
+        touch_flag = true;
+        stateMachine->sendTrigger(EVT_touch_On);
+    } else if (!result && touch_flag) {
+        syslog(LOG_NOTICE, "%08u, TouchSensor flipped off", clock->now());
+        touch_flag = false;
+        stateMachine->sendTrigger(EVT_touch_Off);
+    }
+}
+
+void Observer::operateOld() {
+    colorSensor->getRawColor(cur_rgb);
     // process RGB by the Low Pass Filter
     cur_rgb.r = fir_r->Execute(cur_rgb.r);
     cur_rgb.g = fir_g->Execute(cur_rgb.g);

@@ -5,6 +5,7 @@
 //
 
 #include "app.h"
+#include "LineFinder.hpp"
 #include "StateMachine.hpp"
 #include "Observer.hpp"
 #include "LineTracer.hpp"
@@ -33,6 +34,7 @@ void StateMachine::initialize() {
     observer = new Observer(leftMotor, rightMotor, armMotor, tailMotor, touchSensor, sonarSensor, gyroSensor, colorSensor);    observer->freeze(); // Do NOT attempt to collect sensor data until unfreeze() is invoked
     observer->activate();
     blindRunner = new BlindRunner(leftMotor, rightMotor, tailMotor);
+    lineFinder = new LineFinder(leftMotor, rightMotor, tailMotor);
     lineTracer = new LineTracer(leftMotor, rightMotor, tailMotor);
     //lineTracer->activate();
     challengeRunner = new ChallengeRunner(leftMotor, rightMotor, tailMotor,armMotor);
@@ -51,7 +53,7 @@ void StateMachine::sendTrigger(uint8_t event) {
                 case EVT_cmdStart_R:
                 case EVT_cmdStart_L:
                 case EVT_touch_On:
-                    state = ST_tracing;
+                    state = ST_finding;
                     syslog(LOG_NOTICE, "%08u, Departing...", clock->now());
                     
                     /* 走行モーターエンコーダーリセット */
@@ -62,9 +64,25 @@ void StateMachine::sendTrigger(uint8_t event) {
                     
                     /* ジャイロセンサーリセット */
                     gyroSensor->reset();
-                    //ev3_led_set_color(LED_GREEN); /* スタート通知 */
-                    lineTracer->activate();
+
+					/* スタート通知 */
+                    ev3_led_set_color(LED_GREEN);
+
+					/* LineFinder の開始 */
+					lineFinder->activate();
+					lineFinder->haveControl();
                     
+                    syslog(LOG_NOTICE, "%08u, Departed", clock->now());
+                    //observer->notifyOfDistance(DIST_force_blind); // switch to ST_Blind forcefully after DIST_force_blind reached
+                    break;
+                default:
+                    break;
+            }
+            break;
+	    case ST_finding:
+			switch (event) {
+				case EVT_line_found:
+				    lineTracer->activate();
                     observer->freeze();
                     lineTracer->freeze();
                     lineTracer->haveControl();
@@ -72,13 +90,10 @@ void StateMachine::sendTrigger(uint8_t event) {
                     clock->sleep(PERIOD_NAV_TSK*FIR_ORDER/1000); // wait until FIR array is filled
                     lineTracer->unfreeze();
                     observer->unfreeze();
-                    syslog(LOG_NOTICE, "%08u, Departed", clock->now());
-                    observer->notifyOfDistance(DIST_force_blind); // switch to ST_Blind forcefully after DIST_force_blind reached
-                    break;
-                default:
-                    break;
-            }
-            break;
+					break;
+			    default:
+					break;
+			}
         case ST_tracing:
             switch (event) {
                 case EVT_backButton_On:
@@ -216,6 +231,7 @@ void StateMachine::exit() {
     leftMotor->reset();
     rightMotor->reset();
     
+    delete lineFinder;
     delete lineTracer;
     delete blindRunner;
     delete challengeRunner;

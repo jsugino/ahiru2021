@@ -8,6 +8,7 @@
 #define StateMachine_hpp
 
 #include "ahiru_common.hpp"
+#include "LineFinder.hpp"
 #include "BlindRunner.hpp"
 #include "ChallengeRunner.hpp"
 
@@ -27,6 +28,7 @@ private:
     Motor*          tailMotor;
     Motor*          armMotor;
     Steering*       steering;
+    LineFinder*     lineFinder;
     LineTracer*     lineTracer;
     BlindRunner*    blindRunner;
     ChallengeRunner*    challengeRunner;

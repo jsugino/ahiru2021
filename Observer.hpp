@@ -73,6 +73,7 @@ public:
     int32_t getLocX();
     int32_t getLocY();
     void operate(); // method to invoke from the cyclic handler
+    void operateOld(); // old method (to be removed)
     void deactivate();
     void freeze();
     void unfreeze();

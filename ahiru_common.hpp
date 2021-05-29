@@ -93,12 +93,13 @@ using namespace ev3api;
 
 // machine state
 #define ST_start        0
-#define ST_tracing      1
-#define ST_blind        2
-#define ST_stopping     3
-#define ST_end          4
-#define ST_slalom 5
-#define ST_block  6
+#define ST_finding      1
+#define ST_tracing      2
+#define ST_blind        3
+#define ST_stopping     4
+#define ST_end          5
+#define ST_slalom       6
+#define ST_block        7
 
 #define ST_NAME_LEN     20  // maximum number of characters for a machine state name
 const char stateName[][ST_NAME_LEN] = {
@@ -168,7 +169,7 @@ const char eventName[][EVT_NAME_LEN] = {
 typedef struct {
     uint16_t h; // Hue
     uint16_t s; // Saturation
-    uint16_t v; // Value of brightness  
+    uint16_t v; // Value of brightness
 } hsv_raw_t;
 
 // pwmSetMode

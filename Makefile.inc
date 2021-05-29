@@ -6,6 +6,7 @@ APPL_CXXOBJS += \
 StateMachine.o \
 Observer.o \
 Navigator.o \
+LineFinder.o \
 LineTracer.o \
 BlindRunner.o \
 ChallengeRunner.o \
