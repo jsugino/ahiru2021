@@ -25,8 +25,9 @@ struct courseSection {
 //        +650, 0.40
 //        +795, 0.30
 const struct courseSection courseMap[] = {
-	{"Bst00",  755, 0.0},    // the st00 end point used to set d_cv01_midpoint below!!!
-	{"Bcv01", 1270, 0.5334},
+/*
+	{"Lst00", 90755, 0.0},    // the st00 end point used to set d_cv01_midpoint below!!!
+	{"Bcv01", 91270, 0.5334},
 	{"Bcv01", 1821, 0.5333}, // the cv01 end point used to set d_cv01_midpoint below!!!
 	{"Bst02", 2175, 0.0},
 	{"Bcv03", 3361,-0.4793},
@@ -51,8 +52,25 @@ const struct courseSection courseMap[] = {
 	{"Rst14",10733, 0.0},  // 10763
 	{"Lst14",10733, 0.0},  // 10763
 #endif
-//	{"Rcv15",DIST_end_blind,-0.247},
-	{"Lcv15",DIST_end_blind,-0.247}
+*/
+	{"Bst00", 2050, 0.0},
+	{"Bcv00", 2565, -0.5334},
+	{"Bcv02", 3265, 0.0},
+	{"Bcv03", 3980, -0.8},
+	{"Bst04", 4285, 0.0},
+	{"Bcv05", 4750, 0.5334},
+	{"Bst06", 4910, 0.0},
+	{"Bcv07", 5375, 0.5335},
+	{"Bst08", 5535, 0.0},
+	{"Bcv09", 6000, -0.5335},
+	{"Bst10", 6008, 0.0},
+	{"Bcv11", 6483, -0.5335},
+	{"Bst12", 6493, 0.0},
+	{"Bcv13", 7133, 0.927},
+	{"Bst14", 7200, 0.0},
+	{"Lst15", 9000, 0.0},
+	{"Lcv16",DIST_end_blind,-0.247}
+
 }; // Note: size of this array is given by sizeof(courseMap)/sizeof(*courseMap)
 const char sBcv01[] = "Bcv01";
 const int32_t d_cv01_midpoint = (755 + 1821) / 2; // <--- this has to agree with st00 and cv01 end points in the course map above!!!

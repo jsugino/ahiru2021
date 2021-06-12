@@ -21,10 +21,10 @@
  */
 #if defined(MAKE_RIGHT)
     static const int _LEFT = 0;
-    static const int _EDGE = -1;
+    static const int _EDGE = 1;
 #else
     static const int _LEFT = 1;
-    static const int _EDGE = 1;
+    static const int _EDGE = -1;
 #endif
 
 //#include <cinttypes>
@@ -67,7 +67,8 @@ using namespace ev3api;
 #define GS_TARGET            47
 
 #define SPEED_NORM           50
-#define SPEED_SLOW           40
+//#define SPEED_SLOW           40
+#define SPEED_SLOW           10
 #define SPEED_RECOVER        10
 #define SPEED_BLIND          75
 #define TURN_MIN            -16  // minimum value PID calculator returns
@@ -89,8 +90,8 @@ using namespace ev3api;
 
 // key distance
 #define DIST_force_blind    745
-#define DIST_end_blind      11600
-
+//#define DIST_end_blind      11600
+#define DIST_end_blind      10000
 // machine state
 #define ST_start        0
 #define ST_tracing      1

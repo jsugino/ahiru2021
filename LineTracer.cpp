@@ -28,6 +28,7 @@ void LineTracer::operate() {
         forward = turn = 0; /* 障害物を検知したら停止 */
 
     }else if(cntl_p_flg){
+        printf("テスト\n");
         turn = calcPropP(); /* 比例制御*/
         forward = speed;
 
@@ -109,7 +110,7 @@ float LineTracer::calcPropP() {
   const int bias = 0;
   
   int diff = g_color_brightness - target; 
-  //printf("ライントレース2通った g_color_brightness=%d\n",g_color_brightness);
+  printf("ライントレース2通った g_color_brightness=%d\n",g_color_brightness);
   return (Kp * diff + bias);
 }
 

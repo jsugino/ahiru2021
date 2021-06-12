@@ -310,6 +310,13 @@ void Observer::operate() {
     curDegree360 = getAzimuth() * _EDGE;
     curSonarDis = sonarSensor->getDistance();
 
+    //ライントレース復帰　テンポラリー
+    //if(distance > 8500 && ((cur_rgb.g + cur_rgb.b <= 100 && cur_rgb.r <=50 && cur_rgb.g <=40 && cur_rgb.b <=60) || cur_rgb.b - cur_rgb.r >= 60 )){
+    //    printf("黒来ました！！！！ prevDis=%lf distance=%lf sa=%lf\n",prevDis,distance,distance-prevDis);
+    //    stateMachine->sendTrigger(EVT_dist_reached);
+    //}
+
+
     //ゴールからスラロームに移行する前のエラー処理
      if(g_challenge_stepNo == 900 ){
          prevDis=distance;
